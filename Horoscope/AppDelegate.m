@@ -2,11 +2,14 @@
 //  AppDelegate.m
 //  Horoscope
 //
-//  Created by 01 on 14/11/26.
+//  Created by 01 on 14/11/25.
 //  Copyright (c) 2014年 施傲天. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "JDSideMenu.h"
+#import "MenuViewController.h"
+#import "MainViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,9 +19,29 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    return YES;
-}
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.window makeKeyAndVisible];
+    
+    MenuViewController *menuController = [[MenuViewController alloc] init];
+    MainViewController *contentController = [[MainViewController alloc] init];
+//    contentController.view.backgroundColor = [UIColor colorWithHue:0.5 saturation:1.0 brightness:1.0 alpha:1.0];
+//    contentController.title = [NSString stringWithFormat: @"Hue: %.2f", 0.5];
+    
+    UIViewController *navController = [[UINavigationController alloc] initWithRootViewController:contentController];
+    
+    
+    
+    contentController.navigationController.navigationBarHidden=YES;
+    JDSideMenu *sideMenu = [[JDSideMenu alloc] initWithContentController:navController
+                                                          menuController:menuController];
+    
+
+    
+//    [sideMenu setBackgroundImage:[UIImage imageNamed:@"menuwallpaper"]];
+//    [navController.navigationController.navigationBar setHidden:YES];
+    self.window.rootViewController = sideMenu;
+    
+    return YES;}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
